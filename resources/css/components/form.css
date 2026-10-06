@@ -22,11 +22,11 @@ label {
 .input:focus-visible {
     outline: 0;
     box-shadow:
-        0 0 0 calc(var(--spacing) * .5) var(--color-background)
+        0 0 0 calc(var(--spacing) * .5) var(--color-background),
         0 0 0 calc(var(--spacing) * 1) var(--color-primary);
 }
 
-@media (min-width: var(--breakpoint-md)) {
+@media (min-width: 48rem) {
     .input {
         font-size: var(--text-sm);
     }
@@ -52,7 +52,7 @@ label {
 .textarea:focus-visible {
     outline: 0;
     box-shadow:
-        0 0 0 calc(var(--spacing) * .5) var(--color-background)
+        0 0 0 calc(var(--spacing) * .5) var(--color-background),
         0 0 0 calc(var(--spacing) * 1) var(--color-primary);
 }
 
