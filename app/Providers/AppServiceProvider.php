@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Model;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Model::unguard();
+        Model::shouldBeStrict();
+        Model::automaticallyEagerLoadRelationships();
+
         if (config('app.env') === 'production' || isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL']) || env('VERCEL')) {
             URL::forceScheme('https');
         }
