@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-
 
 class RegisteredUserController extends Controller
 {
@@ -20,7 +19,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:50'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')],
-            'password' => ['required', 'string', 'min:8', 'max:50'], 
+            'password' => ['required', 'string', 'min:8', 'max:50'],
         ]);
 
         $user = User::create([
@@ -29,10 +28,9 @@ class RegisteredUserController extends Controller
             'password' => $request->password,
         ]);
 
-    
         Auth::login($user);
 
         return redirect('/')->with('success', 'Cuenta creada exitosamente');
-        
+
     }
 }

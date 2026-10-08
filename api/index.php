@@ -22,7 +22,7 @@ $storageDirs = [
 ];
 
 foreach ($storageDirs as $dir) {
-    if (!is_dir($dir)) {
+    if (! is_dir($dir)) {
         @mkdir($dir, 0755, true);
     }
 }
@@ -39,4 +39,4 @@ putenv('SESSION_DRIVER=cookie');
 putenv('LOG_CHANNEL=stderr');
 
 // Forward Vercel request to Laravel public entrypoint
-require __DIR__ . '/../public/index.php';
+require __DIR__.'/../public/index.php';
