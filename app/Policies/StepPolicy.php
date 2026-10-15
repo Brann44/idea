@@ -36,7 +36,7 @@ class StepPolicy
      */
     public function update(User $user, Step $step): bool
     {
-        return false;
+        return $step->idea->user->is($user);
     }
 
     /**
@@ -44,7 +44,7 @@ class StepPolicy
      */
     public function delete(User $user, Step $step): bool
     {
-        return false;
+        return $step->idea->user->is($user);
     }
 
     /**

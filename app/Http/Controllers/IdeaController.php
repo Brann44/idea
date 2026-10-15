@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateIdea;
+use App\Actions\UpdateIdea;
 use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
 use App\IdeaStatus;
 use App\Models\Idea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class IdeaController extends Controller
 {
@@ -17,16 +20,14 @@ class IdeaController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-
         $status = $request->status;
-
         if (! in_array($status, IdeaStatus::values())) {
             $status = null;
         }
-
         $ideas = $user
             ->ideas()
-            ->when(in_array($request->status, IdeaStatus::values()), fn ($query) => $query->where('status', $request->status))
+            ->latest() // <-- Para mostrar las más recientes primero
+            ->when($status, fn ($query, $status) => $query->where('status', $status))
             ->get();
 
         return view('idea.index', [
@@ -46,9 +47,11 @@ class IdeaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreIdeaRequest $request)
+    public function store(StoreIdeaRequest $request, CreateIdea $createIdea)
     {
-        add('persist the idea');
+        $createIdea->handle($request->validated());
+
+        return redirect()->route('idea.index');
     }
 
     /**
@@ -56,9 +59,10 @@ class IdeaController extends Controller
      */
     public function show(Idea $idea)
     {
+        Gate::authorize('view', $idea);
 
         return view('idea.show', [
-            'idea' => $idea
+            'idea' => $idea,
         ]);
 
     }
@@ -74,9 +78,12 @@ class IdeaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateIdeaRequest $request, Idea $idea)
+    public function update(UpdateIdeaRequest $request, Idea $idea, UpdateIdea $updateIdea)
     {
-        //
+        Gate::authorize('update', $idea);
+        $updateIdea->handle($idea, $request->validated());
+
+        return redirect()->route('idea.show', $idea);
     }
 
     /**
@@ -84,6 +91,8 @@ class IdeaController extends Controller
      */
     public function destroy(Idea $idea)
     {
+        Gate::authorize('delete', $idea);
+
         $idea->delete();
 
         return redirect()->route('idea.index');

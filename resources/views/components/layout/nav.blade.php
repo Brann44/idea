@@ -7,13 +7,17 @@
         </div>
 
         <div class="flex gap-x-5 items-center">
-            @auth
 
+
+            @auth
+                <a href="{{ route('profile.edit') }}" class="text-sm font-medium hover:text-primary transition-colors">
+                    {{ auth()->user()->name }}
+                </a>
+                
                 <form method="POST" action="/logout">
                     @csrf
                     <button type="submit" class="btn">Cerrar Sesión</button>
-                </form>
-                
+                </form>                
             @endauth
             
             @guest

@@ -21,3 +21,11 @@ test('it can have steps', function () {
 
     expect($idea->refresh()->steps)->toHaveCount(1);
 });
+
+test('convierte la descripcion de markdown a html', function () {
+    $idea = Idea::factory()->make([
+        'description' => '# Titulo en Markdown',
+    ]);
+
+    expect($idea->formatted_description)->toContain('<h1>Titulo en Markdown</h1>');
+});

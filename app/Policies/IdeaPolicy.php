@@ -20,7 +20,7 @@ class IdeaPolicy
      */
     public function view(User $user, Idea $idea): bool
     {
-        return false;
+        return $idea->user->is($user);
     }
 
     /**
@@ -36,7 +36,7 @@ class IdeaPolicy
      */
     public function update(User $user, Idea $idea): bool
     {
-        return false;
+        return $idea->user->is($user);
     }
 
     /**
@@ -44,7 +44,7 @@ class IdeaPolicy
      */
     public function delete(User $user, Idea $idea): bool
     {
-        return false;
+        return $idea->user->is($user);
     }
 
     /**

@@ -6,6 +6,7 @@
     x-data="{ show: false, name: @js($name) }"
     x-show="show"
     @open-modal.window="if($event.detail === name) show = true;"
+    @close-modal.window="if($event.detail === name) show = false;"
     @keydown.escape.window="show = false"
     x-transition:enter="ease-out duration-200"
     x-transition:enter-start="opacity-0 -translate-y-4 -translate-x-4"
@@ -13,23 +14,21 @@
     x-transition:leave="ease-in duration-150"
     x-transition:leave-start="opacity-100"
     x-transition:leave-end="opacity-0 -translate-y-4 -translate-x-4"
-    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs overflow-y-auto"
     style="display: none"
     role="dialog"
-    arialmodal="true"
+    aria-modal="true"
     aria-labelledby="modal-{{ $name }}-title"
     :aria-hidden="!show"
     tabindex="-1"
 >
-    <x-card @click.away="show = false" class="shadow-xl max-w-2xl">
-
+    <x-card @click.away="show = false" class="shadow-xl max-w-2xl w-full max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div>
-            <h2 id="modal-{{ $name }}-title" class="text-x1 font-bold">{{ $title }}</h2>
+            <h2 id="modal-{{ $name }}-title" class="text-xl font-bold">{{ $title }}</h2>
         </div>
 
-        <div class="mt-3 space-y-3">
+        <div class="mt-4">
             {{ $slot }}
         </div>
-
     </x-card>
 </div>

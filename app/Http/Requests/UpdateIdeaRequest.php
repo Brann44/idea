@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
+use App\IdeaStatus;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateIdeaRequest extends FormRequest
 {
@@ -12,18 +13,23 @@ class UpdateIdeaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'status' => ['required', Rule::enum(IdeaStatus::class)],
+            'image' => ['nullable', 'image', 'max:2048'],
+            'links' => ['nullable', 'array'],
+            'links.*' => ['nullable', 'url'],
+            'steps' => ['nullable', 'array'],
+            'steps.*' => ['nullable'],
         ];
     }
 }

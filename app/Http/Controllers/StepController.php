@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStepRequest;
-use App\Http\Requests\UpdateStepRequest;
 use App\Models\Step;
+use Illuminate\Support\Facades\Gate;
 
 class StepController extends Controller
 {
@@ -51,9 +51,16 @@ class StepController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateStepRequest $request, Step $step)
+    public function update(Step $step)
     {
-        //
+
+        Gate::authorize('update', $step);
+
+        $step->update([
+            'completed' => request()->boolean('completed'),
+        ]);
+
+        return back();
     }
 
     /**
