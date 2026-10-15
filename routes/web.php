@@ -29,3 +29,11 @@ Route::patch('steps/{step}', [StepController::class, 'update'])->name('step.upda
 
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
+
+Route::get('storage/{path}', function (string $path) {
+    $filePath = storage_path('app/public/' . $path);
+
+    abort_unless(file_exists($filePath), 404);
+
+    return response()->file($filePath);
+})->where('path', '.*');
