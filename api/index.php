@@ -10,6 +10,13 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROT
     $_SERVER['SERVER_PORT'] = 443;
 }
 
+// Sincronizar variables de entorno de Vercel con getenv() para Laravel
+foreach (array_merge($_ENV, $_SERVER) as $key => $value) {
+    if (is_string($value) && is_string($key) && ! empty($key)) {
+        putenv("{$key}={$value}");
+    }
+}
+
 // Ensure serverless temporary storage directories exist
 $storageDirs = [
     '/tmp/storage/app/public',
@@ -37,6 +44,7 @@ putenv('VIEW_COMPILED_PATH=/tmp/views');
 putenv('CACHE_STORE=array');
 putenv('SESSION_DRIVER=cookie');
 putenv('LOG_CHANNEL=stderr');
+putenv('DB_CONNECTION=pgsql');
 
 // Forward Vercel request to Laravel public entrypoint
 require __DIR__.'/../public/index.php';
