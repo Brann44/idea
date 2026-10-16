@@ -24,7 +24,7 @@
         {{-- Previsualización y botón para eliminar imagen existente --}}
         @if ($idea && $idea->image_path)
             <div class="space-y-2">
-                <img src="{{ asset('storage/' . $idea->image_path) }}" alt="{{ $idea->title }}" class="rounded-lg w-full max-h-48 object-cover border border-border">
+                <img src="{{ $idea->image_url }}" class="rounded-lg w-full max-h-48 object-cover border border-border">
                 <button 
                     type="submit"
                     form="delete-image-form"

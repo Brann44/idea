@@ -39,7 +39,7 @@
                             @if ($idea->image_path)
                                 <div class="-m-4 mb-4 aspect-video overflow-hidden rounded-t-lg bg-muted">
                                     <img 
-                                        src="{{ asset('storage/' . $idea->image_path) }}" 
+                                        src="{{ $idea->image_url }}"
                                         alt="{{ $idea->title }}" 
                                         class="w-full h-full object-cover"
                                     >

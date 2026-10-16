@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Idea extends Model
@@ -22,6 +23,23 @@ class Idea extends Model
     {
         return Attribute::make(
             get: fn () => Str::markdown($this->description ?? '')
+        );
+    }
+
+    protected function imageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                if (! $this->image_path) {
+                    return null;
+                }
+
+                if (config('filesystems.disks.public.driver') === 's3') {
+                    return Storage::disk('public')->url($this->image_path);
+                }
+
+                return asset('storage/' . $this->image_path);
+            }
         );
     }
 

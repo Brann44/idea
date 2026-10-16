@@ -44,7 +44,7 @@ return [
             'secret' => env('SUPABASE_S3_SECRET', env('AWS_SECRET_ACCESS_KEY')),
             'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
             'bucket' => env('AWS_BUCKET', 'ideas'),
-            'url' => env('AWS_URL'),
+            'url' => env('AWS_URL', 'https://xdvtolthepxuzqkhypjb.supabase.co/storage/v1/object/public/ideas'),
             'endpoint' => env('AWS_ENDPOINT'),  
             'use_path_style_endpoint' => true,
             'throw' => true,

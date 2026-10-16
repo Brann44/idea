@@ -31,7 +31,7 @@
         {{-- Imagen destacada (si existe) --}}
         @if ($idea->image_path)
             <div>
-                <img src="{{ asset('storage/' . $idea->image_path) }}" alt="{{ $idea->title }}" class="rounded-lg w-full max-h-96 object-cover border border-border">
+                <img src="{{ $idea->image_url }}" alt="{{ $idea->title }}" class="rounded-lg w-full max-h-96 object-cover border border-border">
             </div>
         @endif
 
