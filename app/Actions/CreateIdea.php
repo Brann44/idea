@@ -22,8 +22,12 @@ class CreateIdea
 
         // 2. Si hay imagen, guardarla en storage público
         if (isset($attributes['image'])) {
-            $attributes['image_path'] = $attributes['image']->store('ideas', 'public');
+            $path = $attributes['image']->store('ideas', 'public');
+            if ($path) {
+                $attributes['image_path'] = $path;
+            }
         }
+
 
         // 3. Crear la idea asociada al usuario autenticado
         $idea = $this->user->ideas()->create(

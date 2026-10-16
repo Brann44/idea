@@ -44,3 +44,19 @@ Route::get('storage/{path}', function (string $path) {
     return response()->file($filePath);
 })->where('path', '.*');
 
+Route::get('/debug-storage', function () {
+    try {
+        Storage::disk('public')->put('debug.txt', 'test');
+        return [
+            'status' => 'SUCCESS',
+            'url' => Storage::disk('public')->url('debug.txt'),
+        ];
+    } catch (\Throwable $e) {
+        return [
+            'status' => 'ERROR',
+            'message' => $e->getMessage(),
+            'class' => get_class($e),
+        ];
+    }
+});
+

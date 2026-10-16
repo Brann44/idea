@@ -45,9 +45,9 @@ return [
             'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
             'bucket' => env('AWS_BUCKET', 'ideas'),
             'url' => env('AWS_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
+            'endpoint' => env('AWS_ENDPOINT'),  
             'use_path_style_endpoint' => true,
-            'throw' => false,
+            'throw' => true,
             'report' => false,
         ] : [
             'driver' => 'local',
