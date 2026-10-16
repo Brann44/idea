@@ -31,9 +31,14 @@ Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
 
 Route::get('storage/{path}', function (string $path) {
+    if (config('filesystems.disks.public.driver') === 's3') {
+        return redirect(Storage::disk('public')->url($path));
+    }
+
     $filePath = storage_path('app/public/' . $path);
 
     abort_unless(file_exists($filePath), 404);
 
     return response()->file($filePath);
 })->where('path', '.*');
+
