@@ -40,8 +40,8 @@ return [
 
         'public' => env('FILESYSTEM_DISK') === 's3' ? [
             'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'key' => env('SUPABASE_S3_KEY', env('AWS_ACCESS_KEY_ID')),
+            'secret' => env('SUPABASE_S3_SECRET', env('AWS_SECRET_ACCESS_KEY')),
             'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
             'bucket' => env('AWS_BUCKET', 'ideas'),
             'url' => env('AWS_URL'),
