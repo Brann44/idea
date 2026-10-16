@@ -44,6 +44,25 @@ Route::get('storage/{path}', function (string $path) {
     return response()->file($filePath);
 })->where('path', '.*');
 
+Route::get('images/{path}', function (string $path) {
+    $filePath = public_path('images/' . $path);
+
+    if (! file_exists($filePath)) {
+        // Fallback insensible a mayúsculas/minúsculas
+        $files = glob(public_path('images/*'));
+        foreach ($files as $file) {
+            if (strcasecmp(basename($file), $path) === 0) {
+                $filePath = $file;
+                break;
+            }
+        }
+    }
+
+    abort_unless(file_exists($filePath), 404);
+
+    return response()->file($filePath);
+})->where('path', '.*');
+
 Route::get('/debug-storage', function () {
     try {
         Storage::disk('public')->put('debug.txt', 'test');
