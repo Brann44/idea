@@ -1,14 +1,12 @@
 <nav class="border-b border-border px-6">
     <div class="max-w-7xl mx-auto h-16 flex items-center justify-between">
         <div>
-            <a href="/">
-                <img src="/images/imagen3.png" alt="" width="110" alt="Idea logo">
+            <a href="{{ route('idea.index') }}">
+                <img src="/images/Imagen3.png" width="110" alt="Idea logo">
             </a>
         </div>
 
         <div class="flex gap-x-5 items-center">
-
-
             @auth
                 <a href="{{ route('profile.edit') }}" class="text-sm font-medium hover:text-primary transition-colors">
                     {{ auth()->user()->name }}

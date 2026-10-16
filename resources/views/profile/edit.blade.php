@@ -1,6 +1,9 @@
 <x-layout>
     <div class="py-8 max-w-2xl mx-auto space-y-6">
         <div>
+            <a href="{{ route('idea.index') }}" class="inline-flex items-center gap-x-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors mb-4">
+                &larr; Back to Ideas
+            </a>
             <h1 class="text-3xl font-bold">Profile</h1>
             <p class="text-muted-foreground text-sm mt-2">Manage your account settings and preferences.</p>
         </div>
@@ -48,7 +51,10 @@
                     type="password" 
                 />
 
-                <div class="flex justify-end pt-2">
+                <div class="flex justify-end gap-x-3 pt-2">
+                    <a href="{{ route('idea.index') }}" class="btn btn-outlined">
+                        Cancel
+                    </a>
                     <button type="submit" class="btn">
                         Save Changes
                     </button>
