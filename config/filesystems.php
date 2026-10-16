@@ -49,6 +49,7 @@ return [
             'use_path_style_endpoint' => true,
             'throw' => true,
             'report' => false,
+            'token' => null,
         ] : [
             'driver' => 'local',
             'root' => storage_path('app/public'),

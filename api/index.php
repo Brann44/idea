@@ -10,12 +10,17 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROT
     $_SERVER['SERVER_PORT'] = 443;
 }
 
-// Sincronizar variables de entorno de Vercel con getenv() para Laravel
-foreach (array_merge($_ENV, $_SERVER) as $key => $value) {
+// Sincronizar variables de entorno de Vercel (dando prioridad a $_ENV sobre $_SERVER de Lambda)
+foreach (array_merge($_SERVER, $_ENV) as $key => $value) {
     if (is_string($value) && is_string($key) && ! empty($key)) {
         putenv("{$key}={$value}");
     }
 }
+
+// Limpiar el token de sesión de AWS Lambda para que no interfiera con Supabase
+putenv('AWS_SESSION_TOKEN');
+unset($_ENV['AWS_SESSION_TOKEN'], $_SERVER['AWS_SESSION_TOKEN']);
+
 
 // Ensure serverless temporary storage directories exist
 $storageDirs = [
